@@ -1,0 +1,29 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  ARM_USE_MSI: true
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+jobs:
+  terraform:
+    name: Terraform Destroy
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init (with backend)
+        run: terraform -chdir="Intellect_Hub_Terraform_Script" init
+
+      - name: Terraform destroy
+        run: terraform -chdir="Intellect_Hub_Terraform_Script" destroy --auto-approve
