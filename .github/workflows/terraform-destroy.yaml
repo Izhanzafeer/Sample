@@ -6,24 +6,28 @@ on:
 permissions:
   contents: read
 
-env:
-  ARM_USE_MSI: true
-  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
 jobs:
   terraform:
     name: Terraform Destroy
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout code
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
+      # Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init (with backend)
-        run: terraform -chdir="Intellect_Hub_Terraform_Script" init
+      # Terraform Init
+      - name: Terraform Init
+        run: |
+          cd Intellect_Hub_Terraform_Script
+          terraform init
 
-      - name: Terraform destroy
-        run: terraform -chdir="Intellect_Hub_Terraform_Script" destroy --auto-approve
+      # Terraform Destroy
+      - name: Terraform Destroy
+        run: |
+          cd Intellect_Hub_Terraform_Script
+          terraform destroy -auto-approve

@@ -3,33 +3,25 @@ name: Terraform Apply
 on:
   push:
     branches: [main]
-  workflow_dispatch: 
-
-permissions:
-  contents: read
-
-env:
-  ARM_USE_MSI: true
-  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  workflow_dispatch:
 
 jobs:
   terraform:
-    name: Terraform Apply
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
+      # Step 2: Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init (with backend)
-        run: |
-            cd Intellect_Hub_Terraform_Script
-            terraform init
+      # Step 3: Terraform Init
+      - name: Terraform Init
+        run: terraform init
 
+      # Step 4: Terraform Plan
       - name: Terraform Plan
-        run: |
-            cd Intellect_Hub_Terraform_Script
-            terraform plan
+        run: terraform plan
