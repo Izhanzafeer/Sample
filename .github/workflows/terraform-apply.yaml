@@ -11,7 +11,7 @@ permissions:
 jobs:
   terraform:
     name: Terraform Apply
-    runs-on: ubuntu-20.04
+    runs-on: slef-hosted
 
     steps:
       # 1️⃣ Checkout repository code
