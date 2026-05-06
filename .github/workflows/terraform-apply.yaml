@@ -5,23 +5,35 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   terraform:
+    name: Terraform Apply
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
+      # 1️⃣ Checkout repository code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Step 2: Setup Terraform
+      # 2️⃣ Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      # Step 3: Terraform Init
-      - name: Terraform Init
-        run: terraform init
+      # 3️⃣ Terraform Format Check (optional but good practice)
+      - name: Terraform Format Check
+        run: terraform -chdir=Intellect_Hub_Terraform_Script fmt -check
 
-      # Step 4: Terraform Plan
+      # 4️⃣ Terraform Init
+      - name: Terraform Init
+        run: terraform -chdir=Intellect_Hub_Terraform_Script init
+
+      # 5️⃣ Terraform Validate
+      - name: Terraform Validate
+        run: terraform -chdir=Intellect_Hub_Terraform_Script validate
+
+      # 6️⃣ Terraform Plan
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform -chdir=Intellect_Hub_Terraform_Script plan
