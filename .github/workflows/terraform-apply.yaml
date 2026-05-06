@@ -18,11 +18,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # 🔥 ADD THIS (IMPORTANT)
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       # 2️⃣ Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      # 3️⃣ Terraform Format Check (optional but good practice)
+      # 3️⃣ Terraform Format Check
       - name: Terraform Format Check
         run: terraform -chdir=Intellect_Hub_Terraform_Script fmt -check
 
@@ -37,3 +43,7 @@ jobs:
       # 6️⃣ Terraform Plan
       - name: Terraform Plan
         run: terraform -chdir=Intellect_Hub_Terraform_Script plan
+
+      # 🔥 ADD APPLY (you missed this too)
+      - name: Terraform Apply
+        run: terraform -chdir=Intellect_Hub_Terraform_Script apply -auto-approve
