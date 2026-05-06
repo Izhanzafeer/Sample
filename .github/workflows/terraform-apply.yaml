@@ -11,7 +11,7 @@ permissions:
 jobs:
   terraform:
     name: Terraform Apply
-    runs-on: slef-hosted
+    runs-on: self-hosted
 
     steps:
       # 1️⃣ Checkout repository code
